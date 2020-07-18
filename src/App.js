@@ -5,11 +5,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import "./App.css";
 import { Button, Input } from "@material-ui/core";
+import ImageUpload from './ImageUpload';
 
 /**
  * make note of firebase commands on notabity first thing today!
  *make into smaller components
- 
+
  */
 
 //Created following tutorial from Clever Programmer YT
@@ -95,6 +96,10 @@ function App() {
 
   return (
     <div className="App">
+
+
+      <ImageUpload/>
+      
       <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signup">
