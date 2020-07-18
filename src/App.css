@@ -11,6 +11,8 @@
   object-fit: contain;
   border-bottom: 1px solid lightgray;
   padding: 20px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .app__signup{
@@ -19,6 +21,10 @@
 }
 
 .app__headerImage{
-  display: flex;
-  flex-direction: column;
+  object-fit: contain;
+}
+
+
+.app__posts{
+  padding: 20px;
 }

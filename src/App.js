@@ -168,7 +168,7 @@ function App() {
       {/**Header */}
       <div className="app__header">
         <img
-          className="app_headerImage"
+          className="app__headerImage"
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt="instagram logo "
         />
@@ -183,11 +183,8 @@ function App() {
       {/* <Button onClick={() => setOpen(true)}>Signup</Button> */}
       </div>
 
-      
-
-      <h1>Hello World</h1>
-
-      {posts.map(({ id, post }) => (
+        <div className="app__posts">
+        {posts.map(({ id, post }) => (
         <Post
           key={id}
           username={post.username}
@@ -195,6 +192,7 @@ function App() {
           imageUrl={post.imageUrl}
         />
       ))}
+        </div>
 
       {user?.displayName ? (
         <ImageUpload username={user.displayName} />
