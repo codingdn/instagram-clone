@@ -60,7 +60,7 @@ const Post = ({ user, postId, username, caption, imageUrl }) => {
           </p>
         ))}
         </div>
-      <form className="post__commentBox">
+      {user && (<form className="post__commentBox">
         <input
           className="post__input"
           type="text"
@@ -76,7 +76,7 @@ const Post = ({ user, postId, username, caption, imageUrl }) => {
         >
           Post
         </button>
-      </form>
+      </form>)}
     </div>
   );
 };
