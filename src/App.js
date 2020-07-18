@@ -8,7 +8,8 @@ import { Button, Input } from "@material-ui/core";
 
 /**
  * make note of firebase commands on notabity first thing today!
- *
+ *make into smaller components
+ 
  */
 
 //Created following tutorial from Clever Programmer YT
