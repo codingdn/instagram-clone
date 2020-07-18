@@ -6,10 +6,9 @@ import Modal from "@material-ui/core/Modal";
 import "./App.css";
 import { Button, Input } from "@material-ui/core";
 
-
 /**
  * make note of firebase commands on notabity first thing today!
- * 
+ *
  */
 
 //Created following tutorial from Clever Programmer YT
@@ -47,22 +46,16 @@ function App() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
 
+  const [openSignIn, setOpenSignIn] = useState(false);
+
   useEffect(() => {
     //firebase authentification
-    auth.onAuthStateChanged((authUser)=>{
-      if(authUser){
-       console.log(authUser);
-       setUser(authUser); 
-       if(authUser.displayName){
-        //dont update username
-       }else{
-         //if we just created a new user
-         return authUser.updateProfile({
-           displayName: username,
-         })
-       }
-      }else{
-        setUser(null);  
+    auth.onAuthStateChanged((authUser) => {
+      if (authUser) {
+        console.log(authUser);
+        setUser(authUser);
+      } else {
+        setUser(null);
       }
     });
   }, []);
@@ -82,12 +75,26 @@ function App() {
     event.preventDefault();
     auth
       .createUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        return authUser.user.updateProfile({
+          displayName: username,
+        });
+      })
       .catch((error) => alert(error.message));
   };
 
+  const signIn = (event) =>{
+    event.preventDefault();
+   
+    auth.signInWithEmailAndPassword(email, password).catch((error) => alert(error.message));
+
+    setOpenSignIn(false);
+
+  }
+
   return (
     <div className="App">
-      <Modal open={open} onClose={() => setOpen(false)}>
+      <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signup">
             <center>
@@ -97,12 +104,6 @@ function App() {
                 alt="instagram logo "
               />
             </center>
-            <Input
-              placeholder="username"
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            ></Input>
             <Input
               placeholder="email"
               type="text"
@@ -115,7 +116,7 @@ function App() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
-            <Button type="submit" onClick={signUp}>
+            <Button type="submit" onClick={signUp}> 
               Sign Up
             </Button>
           </form>
@@ -129,7 +130,17 @@ function App() {
           alt="instagram logo "
         />
       </div>
-      <Button onClick={() => setOpen(true)}>Signup</Button>
+
+      {user ? (
+        <Button onClick={() => auth.signOut()}>Log Out</Button>
+      ) : (
+        <div className="app__loginContainer">
+          <Button onClick={() => setOpenSignIn(true)}>Sign In</Button>
+          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+        </div>
+      )}
+      {/* <Button onClick={() => setOpen(true)}>Signup</Button> */}
+
       <h1>Hello World</h1>
 
       {posts.map(({ id, post }) => (
