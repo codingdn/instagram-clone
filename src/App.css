@@ -17,3 +17,8 @@
   display: flex;
   flex-direction: column;
 }
+
+.app__headerImage{
+  display: flex;
+  flex-direction: column;
+}

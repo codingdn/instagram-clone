@@ -2,7 +2,7 @@ import React from "react";
 import "./Post.css";
 import Avatar from "@material-ui/core/Avatar";
 
-export default function Post({ username, caption, imageUrl }) {
+const Post = ({imageUrl, username, caption})=> {
   return (
     <div className="post">
       <div className="post__header">
@@ -24,3 +24,5 @@ export default function Post({ username, caption, imageUrl }) {
     </div>
   );
 }
+
+export default Post;

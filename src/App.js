@@ -5,7 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import "./App.css";
 import { Button, Input } from "@material-ui/core";
-import ImageUpload from './ImageUpload';
+import ImageUpload from "./ImageUpload";
 
 /**
  * make note of firebase commands on notabity first thing today!
@@ -52,18 +52,23 @@ function App() {
 
   useEffect(() => {
     //firebase authentification
-    auth.onAuthStateChanged((authUser) => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         console.log(authUser);
         setUser(authUser);
       } else {
         setUser(null);
       }
-    });
-  }, []);
+    })
 
+    return()=>{
+      unsubscribe();
+    }
+  }, [user, username]);
+
+  //
   useEffect(() => {
-    db.collection("posts").onSnapshot((snapshot) => {
+    db.collection("posts").orderBy('timestamp', 'desc').onSnapshot((snapshot) => {
       setPosts(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -85,21 +90,53 @@ function App() {
       .catch((error) => alert(error.message));
   };
 
-  const signIn = (event) =>{
+  const signIn = (event) => {
     event.preventDefault();
-   
-    auth.signInWithEmailAndPassword(email, password).catch((error) => alert(error.message));
+
+    auth
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => alert(error.message));
 
     setOpenSignIn(false);
-
-  }
+  };
 
   return (
     <div className="App">
-
-
-      <ImageUpload/>
-      
+      <Modal open={open} onClose={() => setOpen(false)}>
+        <div style={modalStyle} className={classes.paper}>
+          <form className="app__signup">
+            <center>
+              <img
+                className="app_headerImage"
+                src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt="instagram logo "
+              />
+            </center>
+            <Input
+              placeholder="username"
+              username={username}
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            ></Input>
+            <Input
+              placeholder="email"
+              type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            ></Input>
+            <Input
+              placeholder="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            ></Input>
+            <Button type="submit" onClick={signUp}>
+              Sign Up
+            </Button>
+          </form>
+        </div>
+      </Modal>
       <Modal open={openSignIn} onClose={() => setOpenSignIn(false)}>
         <div style={modalStyle} className={classes.paper}>
           <form className="app__signup">
@@ -122,8 +159,8 @@ function App() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             ></Input>
-            <Button type="submit" onClick={signUp}> 
-              Sign Up
+            <Button type="submit" onClick={signIn}>
+              Sign In
             </Button>
           </form>
         </div>
@@ -157,6 +194,12 @@ function App() {
           imageUrl={post.imageUrl}
         />
       ))}
+
+      {user?.displayName ? (
+        <ImageUpload username={user.displayName} />
+      ) : (
+        <h3>Sorry, you need to be logged in to upload</h3>
+      )}
     </div>
   );
 }
