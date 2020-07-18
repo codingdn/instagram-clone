@@ -172,9 +172,7 @@ function App() {
           src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
           alt="instagram logo "
         />
-      </div>
-
-      {user ? (
+        {user ? (
         <Button onClick={() => auth.signOut()}>Log Out</Button>
       ) : (
         <div className="app__loginContainer">
@@ -183,6 +181,9 @@ function App() {
         </div>
       )}
       {/* <Button onClick={() => setOpen(true)}>Signup</Button> */}
+      </div>
+
+      
 
       <h1>Hello World</h1>
 

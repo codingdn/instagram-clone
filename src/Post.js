@@ -2,6 +2,28 @@ import React from "react";
 import "./Post.css";
 import Avatar from "@material-ui/core/Avatar";
 
+// const Post = ({imageUrl, username, caption})=> {
+//   return (
+//     <div className="post">
+//       <div className="post__header">
+//         {/**header -> avater + username */}
+//         <Avatar
+//           className="post__avatar"
+//           alt={username}
+//           src="/static/image/avatar/1.jpg"
+//         />
+//         <h3>{username}</h3>
+//       </div>
+//       {/**image */}
+//       <img className="post__image" src={imageUrl} />
+
+//       {/**userane + caption */}
+//       <h4 className="post__text">
+//         <strong>{username}:</strong> {caption}
+//       </h4>
+//     </div>
+//   );
+// }
 const Post = ({imageUrl, username, caption})=> {
   return (
     <div className="post">
@@ -9,17 +31,17 @@ const Post = ({imageUrl, username, caption})=> {
         {/**header -> avater + username */}
         <Avatar
           className="post__avatar"
-          alt={username}
+          // alt={username}
           src="/static/image/avatar/1.jpg"
         />
-        <h3>{username}</h3>
+        <h3>username</h3>
       </div>
       {/**image */}
       <img className="post__image" src={imageUrl} />
 
       {/**userane + caption */}
       <h4 className="post__text">
-        <strong>{username}:</strong> {caption}
+        <strong>username:</strong> caption
       </h4>
     </div>
   );
